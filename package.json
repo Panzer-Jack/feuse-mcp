@@ -45,6 +45,7 @@
     "publish": "npm publish",
     "link": "npm run build && npm link",
     "unlink": "npm unlink -g feuse-mcp",
+    "docs:install": "pnpm -C docs install",
     "docs:dev": "pnpm -C docs docs:dev",
     "docs:build": "pnpm -C docs docs:build",
     "docs:preview": "pnpm -C docs docs:preview"

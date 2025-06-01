@@ -1,7 +1,8 @@
 {
   "name": "@feuse-mcp/docs",
   "version": "1.0.0",
-  "description": "",
+  "description": "the docs for feuse-mcp",
+  "private": true,
   "type": "module",
   "main": "index.js",
   "scripts": {

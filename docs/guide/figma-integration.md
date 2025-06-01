@@ -99,6 +99,15 @@ https://www.figma.com/file/ABC123/Design-File-Name?node-id=11675-21664
 - 🎯 **精确对比**: 支持局部区域的精确比较
 - 🔍 **差异检测**: 高亮显示主要差异区域（#TODO）
 
+#### **使用示例：**
+
+```
+<!-- vscode:  -->
+#similarity-figma 
+http://localhost:8080
+https://www.figma.com/file/ABC123/Design-File-Name?node-id=11675-21664
+```
+
 ## 工作流程建议
 
 ### 1. 设计转代码完整流程

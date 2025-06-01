@@ -16,7 +16,7 @@ export class MCPServer {
 
     // 注册 Tools
     this.figmaTools = new FigmaTools({ server, figmaApiKey })
-    this.similarityTools = new SimilarityTools({ server })
+    this.similarityTools = new SimilarityTools({ server, figmaTools: this.figmaTools })
     this.utilityTools = new UtilityTools({ server, figmaTools: this.figmaTools })
     this.server = server
     this.registerTools()

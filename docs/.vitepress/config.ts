@@ -19,7 +19,7 @@ export default defineConfig({
                 content: 'feuse-mcp, MCP, Model Context Protocol, Figma, API automation, Frontend tools, Code generation, Design tokens',
             },
         ],
-        ['link', { rel: 'shortcut icon', href: '/feuse-mcp.png' }],
+        ['link', { rel: 'shortcut icon', href: 'https://pic1.imgdb.cn/item/683c231d58cb8da5c82100fe.png' }],
     ],
 
     // 国际化配置

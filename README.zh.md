@@ -1,7 +1,7 @@
 <div align="center">
 
 <p align="center">
-    <img src="" alt="" width="300px">
+    <img src="https://github.com/user-attachments/assets/6f5a6011-9c4a-450d-8ebd-60b954dbc05f" alt="feuse-mcp" width="300px">
 </p>
     
 前端实用 MCP（模型上下文协议）工具 - 为 Web 开发者提供的自动化 API 集成、Figma 设计转代码和开发工作流优化的基础工具集。

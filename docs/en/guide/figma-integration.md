@@ -97,6 +97,16 @@ Compare visual similarity between generated code pages and original Figma design
 - 🎯 **Precise Comparison**: Support precise comparison of local regions
 - 🔍 **Difference Detection**: Highlight major difference areas (#TODO)
 
+#### **Usage Example:**
+
+```
+<!-- vscode:  -->
+#similarity-figma 
+http://localhost:8080
+https://www.figma.com/file/ABC123/Design-File-Name?node-id=11675-21664
+```
+
+
 ## Workflow Recommendations
 
 ### 1. Complete Design-to-Code Process

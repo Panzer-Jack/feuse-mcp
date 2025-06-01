@@ -1,10 +1,40 @@
-import { chromium } from 'playwright'
+import puppeteer from 'puppeteer-core'
+import * as ChromeLauncher from 'chrome-launcher'
 
 /**
  * 截图服务类，用于对指定URL进行网页截图
  */
 export class ScreenshotService {
   constructor() { }
+
+  /**
+   * 获取Chrome可执行文件路径
+   * @returns Chrome路径
+   */
+  private async getChromeExecutablePath(): Promise<string> {
+    try {
+      // 使用 chrome-launcher 自动查找 Chrome
+      const installation = await ChromeLauncher.Launcher.getInstallations()
+      if (installation && installation.length > 0) {
+        return installation[0] // 返回第一个找到的 Chrome 安装路径
+      }
+    } catch (error) {
+      console.warn('Chrome launcher failed to find Chrome installation:', error)
+    }
+
+    // 如果 chrome-launcher 失败，回退到手动路径
+    const platform = process.platform
+    if (platform === 'darwin') {
+      // macOS
+      return '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    } else if (platform === 'win32') {
+      // Windows
+      return 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    } else {
+      // Linux
+      return '/usr/bin/google-chrome'
+    }
+  }
 
   /**
    * 对指定URL进行截图
@@ -24,21 +54,27 @@ export class ScreenshotService {
     height?: number
     timeout?: number
   }) {
-    const browser = await chromium.launch({ headless: true })
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: await this.getChromeExecutablePath(),
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
+
     try {
-      // 创建新的浏览器上下文
-      const context = await browser.newContext({
-        viewport: {
-          width: options?.width || 1280,
-          height: options?.height || 720,
-        },
+      // 创建新页面
+      const page = await browser.newPage()
+
+      // 设置视口大小
+      await page.setViewport({
+        width: 375,
+        height: 0,
       })
 
-      // 创建新页面并导航到指定URL
-      const page = await context.newPage()
+      // 导航到指定URL，等待网络空闲
       await page.goto(url, {
         timeout: options?.timeout || 30000,
-        waitUntil: 'networkidle',
+        waitUntil: 'networkidle0',
       })
 
       // 执行截图
@@ -46,10 +82,13 @@ export class ScreenshotService {
         fullPage: options?.fullPage || false,
       })
 
-      // const imageBufferStr = Buffer.from(imageBuffer).toString('base64')
+      // 将 Uint8Array 转换为 Buffer
+      const buffer = Buffer.from(imageBuffer)
+
+      // const imageBufferStr = buffer.toString('base64')
       // console.log('imageBufferStr', imageBufferStr)
 
-      return imageBuffer
+      return buffer
     } finally {
       // 确保浏览器关闭
       await browser.close()
@@ -69,14 +108,18 @@ export class ScreenshotService {
     fileName?: string
     timeout?: number
   }) {
-    const browser = await chromium.launch({ headless: true })
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: await this.getChromeExecutablePath(),
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
+
     try {
-      const context = await browser.newContext()
-      const page = await context.newPage()
+      const page = await browser.newPage()
 
       await page.goto(url, {
         timeout: options?.timeout || 30000,
-        waitUntil: 'networkidle',
+        waitUntil: 'networkidle0',
       })
 
       // 等待选择器对应的元素出现
@@ -90,7 +133,10 @@ export class ScreenshotService {
 
       const imageBuffer = await element.screenshot()
 
-      return imageBuffer
+      // 将 Uint8Array 转换为 Buffer
+      const buffer = Buffer.from(imageBuffer)
+
+      return buffer
     } finally {
       await browser.close()
     }

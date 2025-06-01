@@ -1,21 +1,27 @@
 import type { FastMCP } from 'fastmcp'
+import type { FigmaToolsCoreType } from '../figma'
 
 import { imageContent } from 'fastmcp'
 import { z } from 'zod'
 
-import { FigmaService, Logger } from '../figma/figma'
+import { Logger } from '../figma/figma'
 import { ScreenshotService } from './screenshot'
 import similarityPrompt from './prompt/similarity-prompt.xml'
+import { FigmaTools } from '../figma'
 
 export class SimilarityTools {
   public server: FastMCP
+  public figmaToolsCore: FigmaToolsCoreType
 
   constructor({
     server,
+    figmaTools,
   }: {
     server: FastMCP
+    figmaTools: FigmaTools
   }) {
     this.server = server
+    this.figmaToolsCore = figmaTools.figmaToolsCore
   }
 
   public registerTools(): void {
@@ -52,7 +58,7 @@ export class SimilarityTools {
         session: any
       }) => {
         try {
-          const figmaService = new FigmaService(session.figmaApiKey as string)
+          const figmaService = this.figmaToolsCore.figmaService
           const screenshotService = new ScreenshotService()
 
           console.log(`Processing similarity check for URL: ${url}, Figma fileKey: ${fileKey}, nodeId: ${nodeId || 'not provided'}`)

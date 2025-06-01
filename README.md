@@ -1,9 +1,9 @@
 <div align="center">
 
 <p align="center">
-    <img src="" alt="" width="300px">
+    <img src="https://github.com/user-attachments/assets/6f5a6011-9c4a-450d-8ebd-60b954dbc05f" alt="feuse-mcp" width="300px">
 </p>
-    
+
 Frontend Useful MCP (Model Context Protocol) Tools - Essential utilities for web developers to automate API integration, Figma design-to-code conversion, and development workflow optimization.
 
 <div align="center">

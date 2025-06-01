@@ -1,0 +1,50 @@
+<project-standards>
+  <title>Project Standards Management</title>
+  <purpose>
+    Manage and retrieve project-specific coding standards and development guidelines
+  </purpose>
+  <config>
+    <target-file>current-project-root/.github/copilot-instructions.md</target-file>
+    <description>GitHub Copilot instructions file containing project standards</description>
+    <cursor-target-file>current-project-root/.cursorrules</cursor-target-file>
+    <cursor-description>Cursor AI assistant rules file containing project-specific coding standards and guidelines</cursor-description>
+  </config>
+  <workflow>
+    <step id="1" condition="file-exists">
+      <description>If the copilot instructions file exists, read and return the detailed project standards</description>
+      <action>read-standards</action>
+      <target>current-project-root/.github/copilot-instructions.md</target>
+      <output>Return the complete project standards for implementation</output>
+    </step>
+    <step id="2" condition="cursor-file-exists">
+      <description>If the cursor rules file exists, read and return the Cursor AI standards</description>
+      <action>read-cursor-standards</action>
+      <target>current-project-root/.cursorrules</target>
+      <output>Return the complete Cursor AI rules for implementation</output>
+    </step>
+    <step id="3" condition="file-not-exists">
+      <description>If no standards file exists, call the initialize-project-standard MCP tool to create one</description>
+      <action>initialize-standards</action>
+      <mcp-tool>initialize-project-standard</mcp-tool>
+      <target>current-project-root/.github/copilot-instructions.md</target>
+      <note>This will create a new standards file using the project template</note>
+    </step>
+    <step id="4" condition="cursor-file-not-exists">
+      <description>If no cursor rules file exists, call the initialize-project-standard MCP tool to create one</description>
+      <action>initialize-cursor-standards</action>
+      <mcp-tool>initialize-project-standard</mcp-tool>
+      <target>current-project-root/.cursorrules</target>
+      <note>This will create a new Cursor AI rules file using the project template</note>
+    </step>
+  </workflow>
+  <guidelines>
+    <usage>
+      <item>Always check for existing standards before creating new ones</item>
+      <item>Ensure standards are applied consistently across the project</item>
+      <item>Update standards when project requirements change</item>
+      <item>Maintain consistency between GitHub Copilot and Cursor AI rules</item>
+      <item>Prioritize reading both instruction files when they exist</item>
+      <item>Use the appropriate initialization tool for missing standards files</item>
+    </usage>
+  </guidelines>
+</project-standards>

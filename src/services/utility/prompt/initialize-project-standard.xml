@@ -1,0 +1,66 @@
+<project-initialization>
+  <title>Initialize Project Standards</title>
+  <purpose>
+    Set up and manage project-specific coding standards and development guidelines
+  </purpose>
+  <config>
+    <target-file>current-project-root/.github/copilot-instructions.md</target-file>
+    <description>GitHub Copilot instructions file containing project-specific coding standards</description>
+    <cursor-target-file>current-project-root/.cursorrules</cursor-target-file>
+    <cursor-description>Cursor AI assistant rules file containing project-specific coding standards and guidelines</cursor-description>
+  </config>
+  <workflow>
+    <step id="1" condition="file-exists">
+      <description>If the copilot instructions file exists, read and parse the existing project standards</description>
+      <action>read-existing-standards</action>
+      <target>current-project-root/.github/copilot-instructions.md</target>
+      <output>Return the current project standards for reference</output>
+    </step>
+    <step id="2" condition="file-not-exists">
+      <description>If no copilot instructions file exists, generate a new one using the provided template</description>
+      <action>create-standards-file</action>
+      <target>current-project-root/.github/copilot-instructions.md</target>
+      <template>Use the content from the `template` tag to create a comprehensive project standards file</template>
+      <requirements>
+        <item>Include coding style guidelines</item>
+        <item>Define naming conventions</item>
+        <item>Specify file organization patterns</item>
+        <item>Document API documentation standards</item>
+        <item>Set testing requirements</item>
+        <item>Define commit message formats</item>
+      </requirements>
+    </step>
+    <step id="3" condition="cursor-file-exists">
+      <description>If the cursor rules file exists, read and parse the existing Cursor AI standards</description>
+      <action>read-existing-cursor-standards</action>
+      <target>current-project-root/.cursorrules</target>
+      <output>Return the current Cursor AI standards for reference</output>
+    </step>
+    <step id="4" condition="cursor-file-not-exists">
+      <description>If no cursor rules file exists, generate a new one using the provided template</description>
+      <action>create-cursor-standards-file</action>
+      <target>current-project-root/.cursorrules</target>
+      <template>Use the content from the `cursor-template` tag to create a comprehensive Cursor AI rules file</template>
+      <requirements>
+        <item>Include project-specific coding patterns</item>
+        <item>Define preferred libraries and frameworks</item>
+        <item>Specify code generation preferences</item>
+        <item>Document project structure conventions</item>
+        <item>Set response formatting guidelines</item>
+        <item>Define error handling patterns</item>
+      </requirements>
+    </step>
+  </workflow>
+  <guidelines>
+    <best-practices>
+      <item>Ensure the generated file is comprehensive and project-specific</item>
+      <item>Include both general development standards and technology-specific guidelines</item>
+      <item>Make instructions clear and actionable for developers</item>
+      <item>Consider the project's tech stack when generating standards</item>
+      <item>Create consistent rules for both GitHub Copilot and Cursor AI assistants</item>
+      <item>Ensure Cursor rules complement the GitHub Copilot instructions</item>
+      <item>Include specific patterns and preferences for Cursor's code generation</item>
+      <item>Define clear boundaries for AI assistant behavior in the project context</item>
+    </best-practices>
+  </guidelines>
+</project-initialization>

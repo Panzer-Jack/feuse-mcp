@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "rootDir": "./src",
+    "module": "commonjs",
+    "paths": {
+      "@fastmcp/*": [
+        "./src/*"
+      ]
+    },
+    "strict": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.xml",
+    "src/**/*.md",
+    "src/types/*.d.ts",
+    "src/main.ts",
+    "src/express-plugin.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

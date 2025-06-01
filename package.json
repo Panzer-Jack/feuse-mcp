@@ -1,0 +1,86 @@
+{
+  "name": "feuse-mcp",
+  "type": "module",
+  "version": "0.1.0",
+  "private": false,
+  "packageManager": "pnpm@10.11.0",
+  "description": "Frontend Useful MCP Tools - Essential utilities for web developers to automate API integration and code generation",
+  "license": "MIT",
+  "bin": {
+    "feuse-mcp": "./dist/main.cjs"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "frontend",
+    "figma",
+    "api",
+    "automation",
+    "code-generation"
+  ],
+  "author": {
+    "name": "Panzer_Jack",
+    "email": "panzer_jack@panzer-jack.cn",
+    "url": "https://www.panzer-jack.cn"
+  },
+  "engines": {
+    "node": "^22.0.0"
+  },
+  "homepage": "https://panzer-jack.github.io/feuse-mcp/",
+  "repository": "https://github.com/Panzer-Jack/feuse-mcp",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start": "npm run build && node dist/main.cjs",
+    "dev": "fastmcp dev src/main.ts",
+    "inspect": "fastmcp inspect src/main.ts",
+    "build": "tsup",
+    "lint": "eslint .'",
+    "lint:fix": "eslint . --fix",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run build",
+    "publish": "npm publish",
+    "link": "npm run build && npm link",
+    "unlink": "npm unlink -g feuse-mcp",
+    "docs:dev": "pnpm -C docs docs:dev",
+    "docs:build": "pnpm -C docs docs:build",
+    "docs:preview": "pnpm -C docs docs:preview"
+  },
+  "dependencies": {
+    "@figma/rest-api-spec": "^0.28.0",
+    "@types/express": "^5.0.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "fastmcp": "^1.21.0",
+    "globals": "^15.15.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "remeda": "^2.21.3",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.13.0",
+    "@esbuild-plugins/tsconfig-paths": "^0.1.2",
+    "@eslint-react/eslint-plugin": "^1.49.0",
+    "@eslint/js": "^9.26.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^22.15.17",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "chalk": "^5.4.1",
+    "effect": "^3.14.21",
+    "eslint": "^9.26.0",
+    "minimist": "^1.2.8",
+    "nodemon": "^2.0.22",
+    "npm-run-all": "^4.1.5",
+    "playwright": "^1.52.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  }
+}

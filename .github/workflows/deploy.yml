@@ -47,6 +47,8 @@ jobs:
         run: pnpm config set registry https://registry.npmjs.org
       - name: Install dependencies
         run: pnpm install # 使用 pnpm install 而不是 npm ci
+      - name: Install dependencies in docs
+        run: pnpm run docs:install # 使用 pnpm install 而不是 npm ci
       - name: Build with VitePress
         run: pnpm run docs:build # 使用 pnpm run 而不是 npm run
       - name: Upload artifact

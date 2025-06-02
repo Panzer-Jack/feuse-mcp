@@ -36,7 +36,7 @@ export default defineConfig({
   noExternal: [
     ...Object.keys(pkg.dependencies || {}),
   ],
-  external: ['playwright', '@valibot/to-json-schema'],
+  external: ['@valibot/to-json-schema'],
   esbuildPlugins: [
     TsconfigPathsPlugin({ tsconfig: './tsconfig.json' }),
     textFilePlugin,

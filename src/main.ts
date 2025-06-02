@@ -4,10 +4,9 @@ import app from './express-plugin'
 import { MCPServer } from './server'
 
 // 验证环境变量
-const FIGMA_API_KEY = process.env.FIGMA_API_KEY
+const FIGMA_API_KEY = process.env.FIGMA_API_KEY as string
 if (!FIGMA_API_KEY) {
   console.error('❌ FIGMA_API_KEY environment variable is not set')
-  process.exit(1)
 }
 
 export const mcpServer = new MCPServer({ figmaApiKey: FIGMA_API_KEY })

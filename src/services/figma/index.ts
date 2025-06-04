@@ -3,8 +3,10 @@ import type { SimplifiedDesign } from './simplify-node-response'
 import { imageContent } from 'fastmcp'
 import yaml from 'js-yaml'
 import { z } from 'zod'
-import { FigmaService, Logger } from './figma'
 import { DownloadFigmaImagesParams } from '@fastmcp/types/figma'
+import { FigmaService, Logger } from './figma'
+
+import figmaToCodePrompt from './prompt/Figma-To-Code.xml'
 
 export class FigmaTools {
   public server: FastMCP
@@ -34,7 +36,7 @@ export class FigmaTools {
   private figmaToCode(): void {
     this.server.addTool({
       name: 'Figma-To-Code',
-      description: '基于获取的Figma明确的样式信息 并且在Png图片识别的辅助调整下（主要依据Figma明确的样式信息），并自动根据本地相关配置（如eslint等）来进行对应调整',
+      description: 'Generate pixel-perfect frontend code from Figma designs. Automatically parses Figma DSL structure and style information, combines with PNG preview images for visual validation, and generates high-quality frontend component code that matches your project tech stack. Supports automatic detection of project configurations (UnoCSS/TailwindCSS/SCSS etc.) and uses existing style variables and design standards.',
       parameters: z.object({
         fileKey: z
           .string()
@@ -70,36 +72,17 @@ export class FigmaTools {
           })
           console.log('figmaImgData', figmaImgData)
 
-          const pre = `
-            <角色定义>
-              你是一个资深前端开发工程师，正在参与一个前端项目的开发。
-            </角色定义>
-
-            <任务步骤>
-              <步骤1>下载所需要的图片/SVG自由，并基于获取的Figma明确的样式信息 并且在Png图片识别的辅助调整下（主要依据Figma明确的样式信息），并自动根据本地相关配置（如eslint等）来进行对应调整</步骤1>
-              <步骤2>当完成用户指令时候，调用以下所需的相关工具去完成目标：获取原型图，并通过原型图与生成的代码页面的截图进行相似性比对</步骤2>
-            </任务步骤>
-
-            <需要提供的内容>
-              <内容1>Figma原型图的URL：可以从上文中去寻找，如果没有提示用户提供</内容1>
-            </需要提供的内容>
-              
-            <注意事项>
-              <事项1>Figma原型中明确的像素值（这些数值应当重视）</事项1>
-              <事项2>如果和Figma原型图颜色明显不一致，则需要进行调整</事项2>
-              <事项3>基于Figma原型Image图得到的整体布局情况，如果发现生成代码与图片布局偏差过大，去矫正因为设计稿图层不规范导致的布局错位问题</事项3>
-            </注意事项>
-
-            <输出>
-              按照用户要求生成高质量代码并与Figma原型图一摸一样，并且在代码中添加注释，说明每个组件的作用和使用方法
-            </输出>
+          const prompt: string = `
+            <xml>
+              <prompt>${figmaToCodePrompt}</prompt>
+              <Figma-DSL>${yamlResult}</Figma-DSL>
+            </xml>
           `
 
           return {
             content: [
-              { type: 'text', text: pre },
+              { type: 'text', text: prompt },
               figmaImgData,
-              { type: 'text', text: yamlResult },
             ],
           }
         } catch (error) {
@@ -172,7 +155,7 @@ export class FigmaTools {
     })
   }
 
-  
+
 }
 
 

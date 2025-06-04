@@ -9,6 +9,11 @@
   <input-item>Detailed backend API definition documentation</input-item>
 </input-requirements>
 
+<monorepo-considerations>
+  <important-note>If this is a monorepo project, you MUST confirm with the user which specific subproject to execute the API generation in before proceeding. Do not assume the target subproject - always ask the user to specify the exact subproject path.</important-note>
+  <confirmation-process>Ask the user: "This appears to be a monorepo project. Please specify which subproject you want to generate the API code for (provide the relative path from the workspace root)."</confirmation-process>
+</monorepo-considerations>
+
 <generation-tasks>
   <task-item>Generate API type definitions and URL constant files in the current subproject's src/apis directory following project standards (if users have their own API model paths and specifications, refer to user's own standards). File names should be the last part of the API URL in camelCase, e.g., getUserInfo.ts</task-item>
   <task-item>Generate mock data files in the current subproject's src/mock directory following project standards (if users have their own mock file paths and specifications, refer to user's own standards). File names should be the last part of the API URL in camelCase, e.g., getUserInfo.ts</task-item>
@@ -16,6 +21,7 @@
 </generation-tasks>
 
 <important-notes>
+  <note>**CRITICAL**: If this is a monorepo project, you MUST first confirm with the user which specific subproject to target before generating any code. Never assume the target subproject location.</note>
   <note>Generated code must comply with the above code structure standards</note>
   <note>Generated code must include necessary comments and error handling logic</note>
   <note>Generated code must comply with TypeScript type definition specifications</note>

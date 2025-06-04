@@ -35,9 +35,9 @@ feuse-mcp 提供了一套完整的前端开发工具集，专注于 Figma 集成
 ## 使用场景
 
 ### 设计转代码工作流
-1. 使用 `Figma-To-Code` 将设计稿转换为基础代码
-2. 通过 `extract-svg-assets` 提取所需的图标资源  
-3. 使用 `extract-color-vars` 生成设计令牌
+1. 使用 `extract-color-vars` 生成设计令牌
+2. 使用 `Figma-To-Code` 将获取到Figma设计稿的DSL描述结构
+3. 自动执行 `Download-Figma-Images` 提取所需的图标资源，到指定目录
 4. 用 `similarity-figma` 验证实现效果
 
 ### API 开发工作流

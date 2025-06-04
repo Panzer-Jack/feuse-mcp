@@ -35,10 +35,10 @@ Project initialization and standardization configuration tools. Automatically an
 ## Usage Scenarios
 
 ### Design-to-Code Workflow
-1. Use `Figma-To-Code` to convert design mockups to base code
-2. Extract required icon resources through `extract-svg-assets`  
-3. Use `extract-color-vars` to generate design tokens
-4. Verify implementation results with `similarity-figma`
+1. Use `extract-color-vars` to generate design tokens
+2. Use `Figma-To-Code` to obtain the DSL description structure of the Figma design
+3. Automatically execute `Download-Figma-Images` to extract required icon resources to the specified directory
+4. Use `similarity-figma` to verify the implementation results
 
 ### API Development Workflow
 1. Use `api-automation` to parse backend API documentation

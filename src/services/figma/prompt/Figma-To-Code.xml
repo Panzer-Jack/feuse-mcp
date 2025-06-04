@@ -11,14 +11,27 @@
   <image-path>PNG/JPG image assets must be downloaded to: {target-project}/src/assets/images/ directory</image-path>
   <icon-path>SVG icon assets must be downloaded to: {target-project}/src/assets/icons/ directory</icon-path>
   <path-notes>If directories don't exist, automatically create the corresponding directory structure</path-notes>
+  <tool-specification>⚠️ CRITICAL INSTRUCTION: Always and exclusively use the Download-Figma-Images tool for all asset downloads, including both images and SVG icons. NEVER use any other tools like extract-svg-assets or download-svg-assets. ⚠️</tool-specification>
 </asset-download-path-specifications>
+
+<asset-download-tool-specification>
+  <critical-note>**CRITICAL INSTRUCTION**: This is a mandatory requirement that must be strictly followed!</critical-note>
+  <exclusive-tool>Download-Figma-Images is the ONLY tool that should be used for downloading any type of assets</exclusive-tool>
+  <prohibition>Strictly prohibited from using extract-svg-assets, download-svg-assets or any other tools for asset downloading</prohibition>
+  <implementation-note>When assets need to be downloaded, always identify all required images and SVG assets first, then use a single call to Download-Figma-Images with appropriate parameters</implementation-note>
+  <parameter-guide>
+    <fileKey>Use the Figma file key provided by the user</fileKey>
+    <nodes>Collect all image and SVG node IDs with their file names</nodes>
+    <localPath>Use the appropriate path based on asset type (images or icons)</localPath>
+  </parameter-guide>
+</asset-download-tool-specification>
 
 <task-execution-workflow>
   <step-1>Project Confirmation: If monorepo, confirm target subproject first</step-1>
   <step-2>Tech Stack Detection: Analyze target project's package.json, config files to identify CSS frameworks and toolchains</step-2>
   <step-3>Style Variable Extraction: Scan CSS variables, SCSS variables, UnoCSS/TailwindCSS configs in project to collect defined design variables</step-3>
   <step-4>Asset Analysis: Analyze all images and SVG assets in Figma design</step-4>
-  <step-5>Asset Download: Download images to src/assets/images and SVGs to src/assets/icons according to path specifications</step-5>
+  <step-5>Asset Download: ⚠️ IMPORTANT: Exclusively use Download-Figma-Images tool (and NO other tools) to download images to src/assets/images and SVGs to src/assets/icons according to path specifications ⚠️</step-5>
   <step-6>Code Generation: Generate frontend code based on Figma's precise style information and project tech stack, ensuring pixel-perfect restoration</step-6>
   <step-7>Style Optimization: Automatically adjust code format according to local configs (eslint, prettier, etc.)</step-7>
   <step-8>Similarity Verification: Call similarity comparison tool to ensure generated code page is highly consistent with Figma prototype</step-8>

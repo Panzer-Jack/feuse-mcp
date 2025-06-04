@@ -1,16 +1,15 @@
 import type { FastMCP } from 'fastmcp'
 import type { FigmaTools, FigmaToolsCoreType } from '../figma'
 
-import { imageContent } from 'fastmcp'
 import { z } from 'zod'
 import { Logger } from '../figma/figma'
 
-import apiAutomation from './prompt/api-automation.xml'
-import projectStandards from './prompt/project-standards.xml'
-import initProjectStandard from './prompt/initialize-project-standard.xml'
-import copilotInstructions from './prompt/copilot-instructions.md'
-import extractColorVars from './prompt/extract-color-vars.xml'
-import extractSVGAssets from './prompt/extract-svg-assets.xml'
+import apiAutomationPrompt from './prompt/api-automation.xml'
+import projectStandardsPrompt from './prompt/project-standards.xml'
+import initProjectStandardPrompt from './prompt/initialize-project-standard.xml'
+import copilotInstructionsPrompt from './prompt/copilot-instructions.md'
+import extractColorVarsPrompt from './prompt/extract-color-vars.xml'
+import extractSVGAssetsPrompt from './prompt/extract-svg-assets.xml'
 
 
 export class UtilityTools {
@@ -135,7 +134,7 @@ export class UtilityTools {
 
           const prompt: string = `
             <xml>
-              <prompt>${extractColorVars}</prompt>
+              <prompt>${extractSVGAssetsPrompt}</prompt>
               <Figma-DSL>${yamlResult}</Figma-DSL>
             </xml>
           `
@@ -190,7 +189,7 @@ export class UtilityTools {
 
           const prompt: string = `
             <xml>
-              <prompt>${extractColorVars}</prompt>
+              <prompt>${extractColorVarsPrompt}</prompt>
               <Figma-DSL>${yamlResult}</Figma-DSL>
             </xml>
           `
@@ -219,8 +218,8 @@ export class UtilityTools {
       execute: async () => {
         const prompt: string = `
           <xml>
-            <prompt>${initProjectStandard}</prompt>
-            <template>${copilotInstructions}</template>
+            <prompt>${initProjectStandardPrompt}</prompt>
+            <template>${copilotInstructionsPrompt}</template>
           </xml>
         `
         return prompt
@@ -243,8 +242,8 @@ export class UtilityTools {
 
         const prompt: string = `
           <xml>
-            <project-standard>${projectStandards}</project-standard>
-            <prompt>${apiAutomation}</prompt>
+            <project-standard>${projectStandardsPrompt}</project-standard>
+            <prompt>${apiAutomationPrompt}</prompt>
             <apiDocs>${apiDocs}</apiDocs>
           </xml>
         `

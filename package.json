@@ -26,9 +26,6 @@
     "email": "panzer_jack@panzer-jack.cn",
     "url": "https://www.panzer-jack.cn"
   },
-  "engines": {
-    "node": "^22.0.0"
-  },
   "homepage": "https://panzer-jack.github.io/feuse-mcp/",
   "repository": "https://github.com/Panzer-Jack/feuse-mcp",
   "scripts": {

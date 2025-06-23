@@ -40,34 +40,65 @@ export class UtilityTools {
       name: 'download-svg-assets',
       description: '根据图像或图标节点的ID，仅下载Figma文件中使用的SVG资源',
       parameters: z.object({
-        fileKey: z.string().describe('The key of the Figma file containing the node'),
+        fileKey: z.string().describe("The key of the Figma file containing the node"),
         nodes: z
           .object({
             nodeId: z
               .string()
-              .describe('The ID of the Figma image node to fetch, formatted as 1234:5678'),
+              .describe("The ID of the Figma image node to fetch, formatted as 1234:5678"),
             imageRef: z
               .string()
               .optional()
               .describe(
-                'If a node has an imageRef fill, you must include this variable. Leave blank when downloading Vector SVG images.',
+                "If a node has an imageRef fill, you must include this variable. Leave blank when downloading Vector SVG images.",
               ),
-            fileName: z.string().describe('The local name for saving the fetched file'),
+            fileName: z.string().describe("The local name for saving the fetched file"),
           })
           .array()
-          .describe('The nodes to fetch as images'),
+          .describe("The nodes to fetch as images"),
+        pngScale: z
+          .number()
+          .positive()
+          .optional()
+          .default(2)
+          .describe(
+            "Export scale for PNG images. Optional, defaults to 2 if not specified. Affects PNG images only.",
+          ),
         localPath: z
           .string()
           .describe(
-            'The absolute path to the directory where images are stored in the project. If the directory does not exist, it will be created. The format of this path should respect the directory format of the operating system you are running on. Don\'t use any special character escaping in the path name either.',
+            "The absolute path to the directory where images are stored in the project. If the directory does not exist, it will be created. The format of this path should respect the directory format of the operating system you are running on. Don't use any special character escaping in the path name either.",
           ),
+        svgOptions: z
+          .object({
+            outlineText: z
+              .boolean()
+              .optional()
+              .default(true)
+              .describe("Whether to outline text in SVG exports. Default is true."),
+            includeId: z
+              .boolean()
+              .optional()
+              .default(false)
+              .describe("Whether to include IDs in SVG exports. Default is false."),
+            simplifyStroke: z
+              .boolean()
+              .optional()
+              .default(true)
+              .describe("Whether to simplify strokes in SVG exports. Default is true."),
+          })
+          .optional()
+          .default({})
+          .describe("Options for SVG export"),
       }),
-      execute: async ({ fileKey, nodes, localPath }, { session }) => {
+      execute: async ({ fileKey, nodes, localPath, pngScale, svgOptions }, { session }) => {
         try {
           const downloads = await this.figmaToolsCore.downloadFigmaSVGAssets({
             fileKey,
             nodes,
             localPath,
+            pngScale,
+            svgOptions,
           })
 
           // If any download fails, return false

@@ -102,34 +102,65 @@ export class FigmaTools {
       name: 'Download-Figma-Images',
       description: 'Download SVG and PNG images used in a Figma file based on the IDs of image or icon nodes',
       parameters: z.object({
-        fileKey: z.string().describe('The key of the Figma file containing the node'),
+        fileKey: z.string().describe("The key of the Figma file containing the node"),
         nodes: z
           .object({
             nodeId: z
               .string()
-              .describe('The ID of the Figma image node to fetch, formatted as 1234:5678'),
+              .describe("The ID of the Figma image node to fetch, formatted as 1234:5678"),
             imageRef: z
               .string()
               .optional()
               .describe(
-                'If a node has an imageRef fill, you must include this variable. Leave blank when downloading Vector SVG images.',
+                "If a node has an imageRef fill, you must include this variable. Leave blank when downloading Vector SVG images.",
               ),
-            fileName: z.string().describe('The local name for saving the fetched file'),
+            fileName: z.string().describe("The local name for saving the fetched file"),
           })
           .array()
-          .describe('The nodes to fetch as images'),
+          .describe("The nodes to fetch as images"),
+        pngScale: z
+          .number()
+          .positive()
+          .optional()
+          .default(2)
+          .describe(
+            "Export scale for PNG images. Optional, defaults to 2 if not specified. Affects PNG images only.",
+          ),
         localPath: z
           .string()
           .describe(
-            'The absolute path to the directory where images are stored in the project. If the directory does not exist, it will be created. The format of this path should respect the directory format of the operating system you are running on. Don\'t use any special character escaping in the path name either.',
+            "The absolute path to the directory where images are stored in the project. If the directory does not exist, it will be created. The format of this path should respect the directory format of the operating system you are running on. Don't use any special character escaping in the path name either.",
           ),
+        svgOptions: z
+          .object({
+            outlineText: z
+              .boolean()
+              .optional()
+              .default(true)
+              .describe("Whether to outline text in SVG exports. Default is true."),
+            includeId: z
+              .boolean()
+              .optional()
+              .default(false)
+              .describe("Whether to include IDs in SVG exports. Default is false."),
+            simplifyStroke: z
+              .boolean()
+              .optional()
+              .default(true)
+              .describe("Whether to simplify strokes in SVG exports. Default is true."),
+          })
+          .optional()
+          .default({})
+          .describe("Options for SVG export"),
       }),
-      execute: async ({ fileKey, nodes, localPath }, { session }) => {
+      execute: async ({ fileKey, nodes, localPath, svgOptions, pngScale }, { session }) => {
         try {
           const downloads = await this.figmaToolsCore.downloadFigmaImages({
             fileKey,
             nodes,
             localPath,
+            svgOptions,
+            pngScale,
           })
 
           // If any download fails, return false
@@ -173,7 +204,11 @@ class FigmaToolsCore {
   }) {
     this.server = server
     this.figmaApiKey = figmaApiKey
-    this.figmaService = new FigmaService(figmaApiKey)
+    this.figmaService = new FigmaService({
+      figmaApiKey: figmaApiKey,
+      figmaOAuthToken: '',
+      useOAuth: false,
+    })
   }
 
   public async figmaToCode({
@@ -203,7 +238,7 @@ class FigmaToolsCore {
     }
 
     Logger.log('Generating YAML result from file')
-    const yamlResult = yaml.dump(result)
+    const yamlResult = JSON.stringify(result, null, 2)
 
     Logger.log('Sending result to client')
     Logger.log('content', yamlResult)
@@ -214,30 +249,38 @@ class FigmaToolsCore {
   public async downloadFigmaImages({
     fileKey,
     nodes,
-    localPath
+    localPath,
+    svgOptions,
+    pngScale
   }: DownloadFigmaImagesParams) {
     const figmaService = this.figmaService
 
     const imageFills = nodes.filter(({ imageRef }) => !!imageRef) as {
-      nodeId: string
-      imageRef: string
-      fileName: string
-    }[]
-    const fillDownloads = figmaService.getImageFills(fileKey, imageFills, localPath)
+      nodeId: string;
+      imageRef: string;
+      fileName: string;
+    }[];
+    const fillDownloads = figmaService.getImageFills(fileKey, imageFills, localPath);
     const renderRequests = nodes
       .filter(({ imageRef }) => !imageRef)
       .map(({ nodeId, fileName }) => ({
         nodeId,
         fileName,
-        fileType: fileName.endsWith('.svg') ? ('svg' as const) : ('png' as const),
-      }))
+        fileType: fileName.endsWith(".svg") ? ("svg" as const) : ("png" as const),
+      }));
 
-    const renderDownloads = figmaService.getImages(fileKey, renderRequests, localPath)
+    const renderDownloads = figmaService.getImages(
+      fileKey,
+      renderRequests,
+      localPath,
+      pngScale,
+      svgOptions,
+    );
 
     const downloads = await Promise.all([fillDownloads, renderDownloads]).then(([f, r]) => [
       ...f,
       ...r,
-    ])
+    ]);
 
     return downloads
   }

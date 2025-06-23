@@ -185,6 +185,53 @@ export class FigmaService {
     writeLogs("figma-simplified.yml", simplifiedResponse);
     return simplifiedResponse;
   }
+
+  async getImageData(
+    fileKey: string,
+    nodeId: string,
+  ): Promise<string> {
+    const images = await this.request<GetImagesResponse>(
+      `/images/${fileKey}?ids=${nodeId}&scale=2&format=png`,
+    ).then(({ images = {} }) => images)
+    let image = ''
+
+    for (const key in images) {
+      image = images[key] as string
+    }
+
+    console.log(images, image)
+
+    return image
+  }
+
+  async getSVG(
+    fileKey: string,
+    nodes: FetchImageParams[],
+    localPath: string,
+  ): Promise<string[]> {
+
+    const svgIds = nodes.filter(({ fileType }) => fileType === 'svg').map(({ nodeId }) => nodeId)
+    const svgFiles
+      = svgIds.length > 0
+        ? this.request<GetImagesResponse>(
+          `/images/${fileKey}?ids=${svgIds.join(',')}&format=svg`,
+        ).then(({ images = {} }) => images)
+        : ({} as GetImagesResponse['images'])
+
+    const files = await Promise.all([svgFiles]).then(([l]) => ({ ...l }))
+
+    const downloads = nodes
+      .map(({ nodeId, fileName }) => {
+        const imageUrl = files[nodeId]
+        if (imageUrl) {
+          return downloadFigmaImage(fileName, localPath, imageUrl)
+        }
+        return false
+      })
+      .filter(url => !!url)
+
+    return Promise.all(downloads)
+  }
 }
 
 function writeLogs(name: string, value: any) {

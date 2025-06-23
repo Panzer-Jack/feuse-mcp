@@ -2,19 +2,31 @@
  * Figma 图片下载参数类型定义
  */
 export interface DownloadFigmaImagesParams {
-  /** Figma 文件的唯一标识符，包含目标节点 */
-  fileKey: string
-
-  /** 需要下载为图片的节点数组 */
-  nodes: FigmaImageNode[]
-
-  /** 
-   * 项目中存储图片的绝对路径目录
-   * 如果目录不存在，将会自动创建
-   * 路径格式应遵循运行操作系统的目录格式，不要在路径名中使用任何特殊字符转义
-   */
-  localPath: string
+  fileKey: string,
+  nodes: FigmaImageNode[],
+  localPath: string,
+  pngScale: number,
+  svgOptions: {
+    outlineText: boolean;
+    includeId: boolean;
+    simplifyStroke: boolean;
+  },
 }
+
+type FetchImageParams = {
+  /**
+   * The Node in Figma that will either be rendered or have its background image downloaded
+   */
+  nodeId: string;
+  /**
+   * The local file name to save the image
+   */
+  fileName: string;
+  /**
+   * The file mimetype for the image
+   */
+  fileType: "png" | "svg";
+};
 
 /**
  * Figma 图片节点类型定义
@@ -23,7 +35,7 @@ export interface FigmaImageNode {
   /** 
    * Figma 图片节点的ID，格式为 1234:5678 
    */
-  nodeId: string
+  nodeId: string;
 
   /** 
    * 如果节点有 imageRef 填充，必须包含此变量

@@ -46,7 +46,7 @@
   "dependencies": {
     "@figma/rest-api-spec": "^0.28.0",
     "@types/express": "^5.0.1",
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.0.0",
     "express": "^5.1.0",
     "fastmcp": "^1.21.0",
     "globals": "^15.15.0",

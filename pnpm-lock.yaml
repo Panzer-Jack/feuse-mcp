@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@figma/rest-api-spec':
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^0.33.0
+        version: 0.33.0
       '@types/express':
         specifier: ^5.0.1
         version: 5.0.3
@@ -874,8 +874,8 @@ packages:
     resolution: {integrity: sha512-Ul5l+lHEcw3L5+k8POx6r74mxEYKG5kOb6Xpy2gCRW6zweT6TEhAf8vhxGgjhqrd/VO/Dirhsb+1hNpD1ue9hw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@figma/rest-api-spec@0.28.0':
-    resolution: {integrity: sha512-WOUX4lXCDNeK6lbGQlLQcbcMkVetj9wsNf8WMJgjbRovJPSBmmNPqa8JzDBezmjTiRBsj176/Y0oM5yNnhyBJw==}
+  '@figma/rest-api-spec@0.33.0':
+    resolution: {integrity: sha512-T/hxrxvnAejDHVzHr5av7eM09vCniyeyLy77QUMmnavUIZe+jA/Ex5mpFhMS6DHVAy/zuBUDJDZRMZ4t8OBwFg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3755,6 +3755,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
@@ -5089,7 +5090,7 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
-  '@figma/rest-api-spec@0.28.0': {}
+  '@figma/rest-api-spec@0.33.0': {}
 
   '@humanfs/core@0.19.1': {}
 

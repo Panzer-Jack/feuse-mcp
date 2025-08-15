@@ -44,7 +44,7 @@
     "docs:preview": "pnpm -C docs docs:preview"
   },
   "dependencies": {
-    "@figma/rest-api-spec": "^0.28.0",
+    "@figma/rest-api-spec": "^0.33.0",
     "@types/express": "^5.0.1",
     "dotenv": "^17.0.0",
     "express": "^5.1.0",

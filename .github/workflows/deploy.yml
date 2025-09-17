@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
       - uses: pnpm/action-setup@v4 # 使用 pnpm
         with:
-          version: 10
+          version: 10.14.0
       # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
       - name: Setup Node
         uses: actions/setup-node@v4
